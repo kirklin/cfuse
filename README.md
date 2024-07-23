@@ -7,10 +7,96 @@
 [![License][license-src]][license-href]
 [![javascript_code style][code-style-image]][code-style-url]
 
-_description_
+> A utility for constructing `className` strings conditionally.
 
-> **Note**:
-> Replace `cfuse`, `_description_` and `kirklin` globally to use this template.
+This module is available in the following formats:
+
+* **ES Module**: `dist/cfuse.mjs`
+* **CommonJS**: `dist/cfuse.cjs`
+
+## Install
+
+```
+$ npm install --save cfuse
+```
+
+## Usage
+
+```js
+import cfuse from "cfuse";
+
+// Concatenates multiple strings, including only truthy values
+console.log(cfuse("Introduction", true && "Chapter 1", "Chapter 2"));
+// result: "Introduction Chapter 1 Chapter 2"
+
+// Extracts keys from objects where the values are truthy
+console.log(cfuse({ title: "Learning", subtitle: false, section: true }));
+// result: "title section"
+
+// Flattens and concatenates elements from arrays, ignoring falsy values
+console.log(cfuse(["Introduction", null, false, "Chapter 1"]));
+// result: "Introduction Chapter 1"
+
+// Handles nested arrays, flattening and concatenating truthy values
+console.log(cfuse(["Introduction"], ["Part A", null, false, "Chapter 1"], [["Appendix", [["Section 1"], "Section 2"]]]));
+// result: "Introduction Part A Chapter 1 Appendix Section 1 Section 2"
+
+// Combines various input types, including strings, objects, and arrays
+console.log(cfuse(
+  "Start",
+  [true && "Middle", { key1: false, key2: true }, ["Subsection", ["Detail"]]],
+  "End"
+// result: "Start Middle key2 Subsection Detail End"
+));
+
+// Processes all types of truthy and falsy values, including null, empty strings, NaN, zero, and more
+console.log(cfuse({
+  nullValue: null,
+  emptyString: "",
+  invalidNumber: Number.NaN,
+  zeroValue: 0,
+  negativeZeroValue: -0,
+  falseValue: false,
+  undefinedValue: undefined,
+  nonEmptyString: "Valid String",
+  whitespaceString: " ",
+  functionValue: Object.prototype.toString,
+  emptyObject: {},
+  nonEmptyObject: { a: 1, b: 2 },
+  emptyList: [],
+  nonEmptyList: [1, 2, 3],
+  positiveNumber: 1,
+}));
+// result: "Valid String  functionValue emptyObject nonEmptyObject emptyList nonEmptyList positiveNumber"
+```
+
+## API
+
+### cfuse(...inputs)
+**Returns:** `String`
+
+#### Parameters
+- **`inputs`**: `Mixed`
+    - The `cfuse` function accepts any number of arguments. Each argument can be of type `Object`, `Array`, `Boolean`, `String`, `Number`, `null`, or `undefined`.
+
+#### Description
+The `cfuse` function concatenates values from the provided arguments into a single string. Falsy values (e.g., `false`, `null`, `undefined`, `0`, `NaN`, `""`, and empty arrays/objects) are ignored. The function processes the arguments in the following manner:
+- **Strings**: Included directly.
+- **Objects**: Includes the keys where the corresponding values are truthy.
+- **Arrays**: Flattens nested arrays and includes all truthy elements.
+- **Other types (Boolean, Number)**: Converts truthy values to strings and ignores falsy values.
+
+#### Examples
+
+```js
+// Examples with different types of inputs
+
+console.log(cfuse(true, false, "", null, undefined, 0, Number.NaN));
+// => ''
+
+console.log(cfuse("Hello", "World", 123, { key: "value" }, [true, "Array"]));
+// => 'Hello World 123 key Array'
+```
 
 ## License
 
