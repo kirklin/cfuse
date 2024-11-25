@@ -102,6 +102,8 @@ console.log(cfuse("Hello", "World", 123, { key: "value" }, [true, "Array"]));
 
 [MIT](./LICENSE) License &copy; 2023-PRESENT [Kirk Lin](https://github.com/kirklin)
 
+This project is inspired by and related to [clsx](https://github.com/lukeed/clsx), licensed under the [MIT License](https://github.com/lukeed/clsx/blob/master/license).
+
 <!-- Badges -->
 
 [npm-version-src]: https://img.shields.io/npm/v/cfuse?style=flat&colorA=080f12&colorB=3491fa
