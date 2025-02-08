@@ -1,7 +1,7 @@
 {
   "name": "cfuse",
   "type": "module",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "pnpm@10.2.1",
   "description": "_description_",
   "author": "Kirk Lin <https://github.com/kirklin>",
